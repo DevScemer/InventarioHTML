@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda</title>
+    <script src="../src/js/inventario.js"></script>
+    <script src="../src/js/producto.js"></script>
+</head>
+<body>
+    <div>
+        <form action="">
+            <label for="txtCodigo">Codigo</label>
+            <input type="text" id="txtCodigo">
+
+            <label for="txtNombre">Nombre</label>
+            <input type="text" id="txtNombre">
+            
+            <label for="txtCantidad">Cantidad</label>
+            <input type="text" id="txtCantidad">
+
+            <label for="txtPrecio">Precio</label>
+            <input type="text" id="txtPrecio">
+
+            <input type="button" id="btnAgregar" value="Agregar">
+            <input type="button" id="btnAgregarInicio" value="Agregar inicio">
+            <input type="button" id="btnListar" value="Listar">
+            <input type="reset" id="btnCancelar" value="Cancelar">
+            <br><br><br>
+
+            <label for="txtCodigoAccion">Codigo</label>
+            <input type="text" id="txtCodigoAccion">
+            <label for="txtPosicion">Posicion</label>
+            <input type="text" id="txtPosicion">
+
+            <input type="button" id="btnInsertar" value="Insertar">
+            <input type="button" id="btnBuscar" value="Buscar">
+            <input type="button" id="btnEliminar" value="Eliminar">
+            <br><br><br>
+            <input type="button" id="btnExtraerPrimero" value="Extraer primero">
+            <input type="button" id="btnListarInverso" value="Listar inverso">
+        </form>
+    </div>
+    <div id="divDetalles">
+
+    </div>
+</body>
+<script>
+    const btnAgregar = document.getElementById("btnAgregar");
+    const btnListar = document.getElementById("btnListar");
+    const btnCancelar = document.getElementById("btnCancelar");
+    const btnAgregarInicio = document.getElementById("btnAgregarInicio");
+    const btnInsertar = document.getElementById("btnInsertar");
+    const btnBuscar = document.getElementById("btnBuscar");
+    const btnEliminar = document.getElementById("btnEliminar");
+    const btnExtraerPrimero = document.getElementById("btnExtraerPrimero");
+    const btnListarInverso = document.getElementById("btnListarInverso");
+
+    const divDetalles = document.getElementById("divDetalles");
+    const inventario = new Inventario();
+
+    btnAgregar.addEventListener("click", ()=>{
+        const codigo = document.getElementById("txtCodigo").value;
+        const nombre = document.getElementById("txtNombre").value;
+        const cantidad = document.getElementById("txtCantidad").value;
+        const precio = document.getElementById("txtPrecio").value;
+
+        inventario.agregar(new Producto(codigo, nombre, cantidad, precio));
+        divDetalles.innerHTML += "Se agrego el producto: " + nombre + "<br>";
+    })
+
+    btnListar.addEventListener("click", ()=>{
+        divDetalles.innerHTML += inventario.listar();
+    })
+
+    btnAgregarInicio.addEventListener("click", ()=>{
+        const codigo = document.getElementById("txtCodigo").value;
+        const nombre = document.getElementById("txtNombre").value;
+        const cantidad = document.getElementById("txtCantidad").value;
+        const precio = document.getElementById("txtPrecio").value;
+
+        inventario.agregarInicio(new Producto(codigo, nombre, cantidad, precio));
+        divDetalles.innerHTML += "Se agrego el producto al inicio: " + nombre + "<br>";
+    })
+
+    btnInsertar.addEventListener("click", ()=>{
+        const codigo = document.getElementById("txtCodigo").value;
+        const nombre = document.getElementById("txtNombre").value;
+        const cantidad = document.getElementById("txtCantidad").value;
+        const precio = document.getElementById("txtPrecio").value;
+        const posicion = document.getElementById("txtPosicion").value;
+
+        inventario.insertar(new Producto(codigo, nombre, cantidad, precio), posicion);
+        divDetalles.innerHTML += "Se inserto el producto en la posicion: " + posicion + "<br>";
+    })
+
+    btnBuscar.addEventListener("click", ()=>{
+        const codigo = document.getElementById("txtCodigoAccion").value;
+        divDetalles.innerHTML += "Se encontró el producto: " + inventario.buscar(codigo).nombre + "<br>";
+    })
+
+    btnEliminar.addEventListener("click", ()=>{
+        const codigo = document.getElementById("txtCodigoAccion").value;
+        inventario.eliminar(codigo);
+        divDetalles.innerHTML += "Se elimino el producto con codigo: " + codigo + "<br>";
+    })
+
+    btnExtraerPrimero.addEventListener("click", ()=>{
+        divDetalles.innerHTML += "Se extrajo el primer producto: " + inventario.extraerPrimero().nombre + "<br>";
+    })
+
+    btnListarInverso.addEventListener("click", ()=>{
+        divDetalles.innerHTML += inventario.listarInverso();
+    })
+    
+</script>
+</html>
